@@ -1,7 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-
 
 def generate_random_directions(n_points, n_dim):
     phi = 2.0 * np.pi * np.random.rand(n_points)
@@ -270,45 +267,3 @@ class matern_cluster_process(object):
             points = np.vstack([self.positions, points])
 
         return self.volume.fix_points(points, cluster_int)
-
-n_dim = 2
-
-"""
-lower_lim = 0.0
-upper_lim = 1000.0
-volume = periodic_box(n_dim, lower_lim, upper_lim)
-plt.xlim((-lower_lim,upper_lim))
-plt.ylim((-lower_lim,upper_lim))
-"""
-
-inner_radius = 300.0
-outer_radius = 850.0
-extra_radius = 100
-volume = concentric_spherical_volume(n_dim, inner_radius, outer_radius, extra_radius)
-
-circle1 = plt.Circle((0,0), inner_radius, color = 'k', fill=False)
-fig, ax = plt.subplots()
-ax.add_artist(circle1)
-circle2 = plt.Circle((0,0), outer_radius, color = 'k', fill=False)
-ax.add_artist(circle2)
-
-plt.xlim((-outer_radius - extra_radius,outer_radius + extra_radius))
-plt.ylim((-outer_radius - extra_radius,outer_radius + extra_radius))
-
-
-ax.set_xlabel("x")
-ax.set_ylabel("y")
-
-clusters = thomas_process_clusters(100, 20.0, 40.0, volume)
-#clusters = segment_cox_clusters(100, 200, volume, generate_bias_directions_from_catalogue)
-#clusters = segment_cox_clusters(100, 200, volume, generate_random_directions_from_catalogue)
-#clusters = matern_cluster_process(100, 50.0, volume)
-
-points, cluster_int, mask = clusters.generate_points(50, add_centrals=True)
-
-plt.scatter(points[:,0], points[:,1], c = 'g', s = 4)
-plt.scatter(points[mask,0], points[mask,1], c = 'b', s = 4)
-plt.scatter(clusters.positions[:,0], clusters.positions[:,1], c = 'r', marker = 'o')
-
-plt.axis("equal")
-plt.show()
