@@ -223,9 +223,8 @@ class thomas_process_clusters(object):
                 points[ii, dim] = np.random.normal(0.0, self.sigma_transverse)
             points[ii, -1] = np.random.normal(0.0, self.sigma_radial)
 
-        cluster_int = np.zeros(n_points, dtype=np.int)
+        cluster_int = np.random.randint(0, self.n_clusters, n_points)
         for ii in range(n_points):
-            cluster_int[ii] = np.random.randint(0, self.n_clusters)
             points[ii, :] = self.volume.rotate(points[ii, :], self.positions[cluster_int[ii]])
             points[ii, :] += self.positions[cluster_int[ii]]
 
