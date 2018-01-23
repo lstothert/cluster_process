@@ -218,7 +218,7 @@ class thomas_process_clusters(object):
 
         n_points = self.n_clusters * n_ppc
         points = np.zeros((n_points, len(self.positions[0,:])))
-	points[:,:self.volume.n_dim-1] = np.random.normal(0.0, self.sigma_transverse, (n_points, self.n_dim-1))
+	points[:,:self.volume.n_dim-1] = np.random.normal(0.0, self.sigma_transverse, (n_points, self.volume.n_dim-1))
         #for ii in range(n_points):
         #    for dim in range(0, self.volume.n_dim - 1):
         #        points[ii, dim] = np.random.normal(0.0, self.sigma_transverse)
