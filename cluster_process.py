@@ -126,8 +126,7 @@ class concentric_spherical_volume(object):
 
         n_points_extended = int(self.volume_ratio * n_points)
         directions = generate_random_directions(n_points_extended, self.n_dim)
-        rads = (np.random.rand(n_points_extended) * (self.extended_upper_lim ** self.n_dim - \
-                                                     self.extended_lower_lim ** self.n_dim)) ** (1.0 / float(self.n_dim))
+        rads = (np.random.rand(n_points_extended) * (self.extended_upper_lim ** self.n_dim - self.extended_lower_lim ** self.n_dim) + self.extended_lower_lim**self.n_dim) ** (1.0 / float(self.n_dim))
         for dim in range(self.n_dim):
             directions[:, dim] *= rads
 
