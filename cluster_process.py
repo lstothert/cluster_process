@@ -81,7 +81,7 @@ class periodic_box(object):
                (self.upper_lim - self.lower_lim) * np.random.rand(n_points)
         return points
 
-    def fix_points(self, points, cluster_int):
+    def fix_points(self, points):
 
         new_points = points.copy()
         for dim in range(self.n_dim):
@@ -95,7 +95,7 @@ class periodic_box(object):
                 mask = (new_points[:, dim] > self.upper_lim)
                 new_points[:, dim] -= self.length* mask
 
-        return new_points, cluster_int
+        return new_points
 
     def rotate(self, points, target_vec):
         return points
@@ -133,14 +133,14 @@ class concentric_spherical_volume(object):
 
         return directions
 
-    def fix_points(self, points, cluster_int):
+    def fix_points(self, points):
 
         radius = np.zeros(len(points[:, 0]))
         for dim in range(self.n_dim):
             radius += points[:, dim] * points[:, dim]
         radius = radius ** 0.5
         mask = (radius < self.upper_lim) & (radius > self.lower_lim)
-        return points, cluster_int, mask
+        return points, mask
 
     def rotate(self, point, target):
 
@@ -196,7 +196,7 @@ class segment_cox_clusters(object):
             cluster_int = np.concatenate([np.arange(self.n_clusters), cluster_int])
             points = np.vstack([self.positions, points])
 
-        return self.volume.fix_points(points, cluster_int)
+        return self.volume.fix_points(points)
 
 class thomas_process_clusters(object):
 
@@ -233,7 +233,7 @@ class thomas_process_clusters(object):
             cluster_int = np.concatenate([np.arange(self.n_clusters), cluster_int])
             points = np.vstack([self.positions, points])
 
-        return self.volume.fix_points(points, cluster_int)
+        return self.volume.fix_points(points)
 
 class matern_cluster_process(object):
 
@@ -266,4 +266,4 @@ class matern_cluster_process(object):
             cluster_int = np.concatenate([np.arange(self.n_clusters), cluster_int])
             points = np.vstack([self.positions, points])
 
-        return self.volume.fix_points(points, cluster_int)
+        return self.volume.fix_points(points)
