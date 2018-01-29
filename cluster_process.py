@@ -95,7 +95,7 @@ class periodic_box(object):
                 mask = (new_points[:, dim] > self.upper_lim)
                 new_points[:, dim] -= self.length* mask
 
-        return new_points
+        return new_points, np.ones(len(points[:,0]), dtype=np.bool)
 
     def rotate(self, points, target_vec):
         return points
